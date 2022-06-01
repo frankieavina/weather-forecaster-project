@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'; 
 import Accordion from 'react-bootstrap/Accordion'; 
 import Card from 'react-bootstrap/Card'
@@ -7,6 +7,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'; 
 import Col from 'react-bootstrap/Col';
 import '../../App.css'; 
+import WeatherContext from '../../context/WeatherContext';
+import CityList from './CityList';
 
 const CardWrapper = styled.header`
     width: 50%; 
@@ -43,39 +45,56 @@ const CardWrapper = styled.header`
 `; 
 
 function CityCard({location}) {
-  return (
 
-    <CardWrapper>
-    <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="1">
-            <Accordion.Header>
-                <Card className='card'>
-                <Card.Body className='cardBody'>
-                    {/* <Card.Title>{location}</Card.Title> */}
-                    <Card.Text>
-                        <Container className='cardContainer'>
-                            <Row className='rowCon'>
-                                <Col className='location'>{location}</Col>
-                                <Col></Col>
-                                <Col className='currentTemp'>99 &#8457;</Col>
-                            </Row>
-                            <Row className='rowCon'>
-                                <Col className='descrip'>Cloudy</Col>
-                                <Col></Col>
-                                <Col className='highLow'>L:50 H:89</Col>
-                            </Row>
-                        </Container>
-                    </Card.Text>
-                </Card.Body>
-                </Card>
-            </Accordion.Header>
-            <Accordion.Body>
-                <CityCardDetail/> 
-            </Accordion.Body>
-        </Accordion.Item>
-     </Accordion>
+    const {weekWeather} = useContext(WeatherContext);
+    const [ isLoading, setIsLoading ] = useState(true); 
 
-    </CardWrapper>
+    useEffect(()=>{
+
+        setIsLoading(weekWeather? false : true);
+
+    },[weekWeather])
+
+
+
+    return (
+    <>
+    {(!isLoading)
+        ?(
+        <CardWrapper>
+            <Accordion defaultActiveKey="0">
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header>
+                        <Card className='card'>
+                        <Card.Body className='cardBody'>
+                            <Card.Text>
+                                <Container className='cardContainer'>
+                                    <Row className='rowCon'>
+                                        <Col className='location'>{location}</Col>
+                                        <Col></Col>
+                                        <Col className='currentTemp'>{weekWeather.data[0].temp} &#8457;</Col>
+                                    </Row>
+                                    <Row className='rowCon'>
+                                        <Col className='descrip'>{weekWeather.data[0].weather.description}</Col>
+                                        <Col></Col>
+                                        <Col className='highLow'>L:{weekWeather.data[0].low_temp} H:{weekWeather.data[0].max_temp}</Col>
+                                    </Row>
+                                </Container>
+                            </Card.Text>
+                        </Card.Body>
+                        </Card>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <CityCardDetail/> 
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+        </CardWrapper>        
+        )
+        : <h3>Loading ...</h3>
+    }
+    </>
+
   )
 }
 
