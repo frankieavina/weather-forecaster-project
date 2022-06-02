@@ -70,7 +70,7 @@ function CityCard({location}) {
                             <Card.Text>
                                 <Container className='cardContainer'>
                                     <Row className='rowCon'>
-                                        <Col className='location'>{location}</Col>
+                                        <Col className='location'>{weekWeather.city_name}</Col>
                                         <Col></Col>
                                         <Col className='currentTemp'>{weekWeather.data[0].temp} &#8457;</Col>
                                     </Row>
@@ -84,7 +84,7 @@ function CityCard({location}) {
                         </Card.Body>
                         </Card>
                     </Accordion.Header>
-                    <Accordion.Body>
+                    <Accordion.Body >
                         <CityCardDetail/> 
                     </Accordion.Body>
                 </Accordion.Item>

@@ -15,7 +15,7 @@ function CityCardDetail() {
       {(dayWeather) 
         ?(
         <Card>
-        <Card.Body>
+        <Card.Body className='cardBody'>
             <Card.Title>
               <QueryBuilderIcon/>
               Hourly Forecast
@@ -25,14 +25,14 @@ function CityCardDetail() {
             {dayWeather.data.map((hourData) =>(
               
               <Card style={{width:'4.5rem', margin:'0 0.1rem'}}>
-                <Card.Body className='cardBody' >
+                <Card.Body  >
                   <Card.Text>
-                    <Container>
-                        <Row>
-                          {(new Date(hourData.timestamp_utc).getUTCHours())}
+                    <Container style={{padding:'0px', textAlign:'center'}}>
+                        <Row style={{textAlign:'center', width:'100%'}}>
+                          {(hourData.timestamp_local).match(/\d\d:\d\d/)}
                         </Row>
                         <Row>
-                          {hourData.weather.icon} 
+                          <img src={require(`../../icons/${hourData.weather.icon}.png`)} width='1rem' />
                         </Row>
                         <Row className='tempF'>
                           {hourData.temp}&#8457; 
