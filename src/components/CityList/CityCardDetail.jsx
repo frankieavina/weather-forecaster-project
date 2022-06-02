@@ -6,9 +6,17 @@ import Button from 'react-bootstrap/Button';
 import WeatherContext from '../../context/WeatherContext';
 import '../../App.css'; 
 
-function CityCardDetail() {
+function CityCardDetail({city}) {
 
   const {dayWeather} = useContext(WeatherContext);
+
+  const result = [...dayWeather].filter(obj =>{
+    return(
+       obj.city_name.match(city)
+    );
+   })
+
+   console.log(result)
 
   return (
     <>
@@ -22,7 +30,7 @@ function CityCardDetail() {
             </Card.Title>
             <Card.Text className='cards'>
 
-            {dayWeather.data.map((hourData) =>(
+            {result[0].data.map((hourData) =>(
               
               <Card style={{width:'4.5rem', margin:'0 0.1rem'}}>
                 <Card.Body  >
