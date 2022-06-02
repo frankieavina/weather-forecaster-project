@@ -2,3 +2,11 @@
     background-image: url("../public/img/1.jpg");
     background-position: center;
 }
+
+.cards{
+    display: flex;
+}
+
+.tempF{
+    font-size: 0.8rem;
+}
