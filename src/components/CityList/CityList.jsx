@@ -4,7 +4,7 @@ import CityCard from './CityCard';
 function CityList() {
 
   return (
-    <div>
+    <div style={{minHeight: '80vh'}}>
         <CityCard/>
     </div>
   )
