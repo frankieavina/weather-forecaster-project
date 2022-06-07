@@ -15,7 +15,7 @@ const Layout = () => {
       <GlobalStyle />
       <Wrapper className='wrapper'>
         <Header className='header'/>
-        <Outlet className='outlet' />
+        <Outlet className='outlet'/>
         <Footer className='footer'/>
       </Wrapper>
     </>

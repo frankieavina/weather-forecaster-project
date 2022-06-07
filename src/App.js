@@ -66,7 +66,9 @@ function App() {
 
   return (
     <>
-    <div className="App" style={{backgroundImage: `url(${dayNight})`, height:'100%'}}>
+    <div className="App" 
+      // style={{backgroundImage: `url(${dayNight})`, height:'100%', width:'100%'}}
+    >
       <WeatherContext.Provider 
       value={{
         cities,
