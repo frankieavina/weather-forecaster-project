@@ -12,14 +12,18 @@ import dayWeatherDB from './data/weatherBit-Day-Forecast.json';
 import weekWeatherDB from './data/weatherBit-Week-Forecast.json';
 import dayAirQualityDB from './data/weatherBit-Day-Air-Quality.json';
 
+import Day from './img/day.png'; 
+import Night from './img/night.png'; 
+
 
 function App() {
 
   const [userCoords, setUserCoords] = useState(null);
-  const [cities, setCities] = useState(['Fresno,CA', 'Modesto,CA']); 
-  const [weekWeather, setWeekWeather] = useState(null); 
-  const [dayWeather, setDayWeather] = useState(null); 
-  const [airDayQuality, setAirDayQuality] = useState([]); 
+  const [cities, setCities] = useState(['Modesto,CA', 'Fresno,CA']); // might not need this 
+  const [weekWeather, setWeekWeather] = useState(null); // remember to put array when pulling from api
+  const [dayWeather, setDayWeather] = useState(null); //// remember to put array when pulling from api
+  const [airDayQuality, setAirDayQuality] = useState(null);// remember to put array when pulling from api
+  const [dayNight, setDayNight] = useState(''); 
 
   useEffect(()=>{
     if (!navigator.geolocation) {
@@ -27,11 +31,18 @@ function App() {
       return;
     }
     else{  
+      const today = new Date().getHours(); 
+      if(today >= 9 && today <= 19){
+        setDayNight(Day);
+      }
+      else{
+        setDayNight(Night);
+      }
       navigator.geolocation.getCurrentPosition(successHandler, errorHandler); 
     }
   },[]);
 
-  const successHandler = position => {
+  const successHandler = position => { 
     const { latitude, longitude } = position.coords;
     setUserCoords({lat:latitude, lng:longitude});
   };
@@ -49,16 +60,19 @@ function App() {
 
     setDayWeather(dayWeatherDB);
     setWeekWeather(weekWeatherDB);
+    setAirDayQuality(dayAirQualityDB); 
 
-  },[dayWeather, weekWeather])
+  },[dayWeather, weekWeather, dayAirQualityDB])
 
   return (
-    <div className="App">
+    <>
+    <div className="App" style={{backgroundImage: `url(${dayNight})`, height:'100%'}}>
       <WeatherContext.Provider 
       value={{
         cities,
         weekWeather,
         dayWeather,
+        airDayQuality,
       }}
       >
         <Routes>
@@ -70,7 +84,8 @@ function App() {
         </Routes>        
       </WeatherContext.Provider>
     </div>
-  );
+    </>
+  ); 
 }
 
 export default App;

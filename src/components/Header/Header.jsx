@@ -57,11 +57,16 @@ const HeaderWrapper = styled.header`
 
   .name{
     font-size: 1.5rem;
-    color: blue; 
+    color: white; 
+    font-weight: bold;
   }
 
   .logo{
-    color: blue; 
+    color: white; 
+  }
+
+  .logo:hover{
+    cursor: pointer; 
   }
 
   `;
@@ -102,7 +107,7 @@ function Header() {
         </div>
         <div>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              <ListAltIcon/>
+              <ListAltIcon className='logo'/>
             </Button>
             <Menu
               id="simple-menu"

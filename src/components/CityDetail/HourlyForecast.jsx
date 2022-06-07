@@ -1,34 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import '../../App.css'; 
 import { useNavigate } from 'react-router-dom';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import { Row, Container } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card'; 
-import Button from 'react-bootstrap/Button'; 
-import WeatherContext from '../../context/WeatherContext';
-import '../../App.css'; 
 
-function CityCardDetail({city}) {
 
-  const {dayWeather} = useContext(WeatherContext);
-  const navigate = useNavigate(); 
+function HourlyForecast({dayResults}) {
 
-  const result = [...dayWeather].filter(obj =>{
-    return(
-       obj.city_name.match(city)
-    );
-   })
-
-   console.log(result)
-
-  const onHandleClick = () => {
-    navigate(`city-weather-details/${city}`)
-  }
 
   return (
     <>
-      {(dayWeather) 
+      {(dayResults) 
         ?(
-        <Card>
+        <Card style={{margin:'1rem 0'}}>
         <Card.Body className='cardBody'>
             <Card.Title>
               <QueryBuilderIcon/>
@@ -36,7 +21,7 @@ function CityCardDetail({city}) {
             </Card.Title>
             <Card.Text className='cards'>
 
-            {result[0].data.map((hourData) =>(
+            {dayResults[0].data.map((hourData) =>(
               
               <Card style={{width:'4.5rem', margin:'0 0.1rem'}}>
                 <Card.Body  >
@@ -58,7 +43,6 @@ function CityCardDetail({city}) {
             ))}
 
             </Card.Text>
-            <Button variant="primary" onClick={onHandleClick}>View Details</Button>
         </Card.Body>
         </Card>        
         )
@@ -69,4 +53,4 @@ function CityCardDetail({city}) {
   )
 }
 
-export default CityCardDetail
+export default HourlyForecast
