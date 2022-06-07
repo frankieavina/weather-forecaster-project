@@ -60,9 +60,9 @@ function App() {
 
     setDayWeather(dayWeatherDB);
     setWeekWeather(weekWeatherDB);
-    console.log(dayNight)
+    setAirDayQuality(dayAirQualityDB); 
 
-  },[dayWeather, weekWeather])
+  },[dayWeather, weekWeather, dayAirQualityDB])
 
   return (
     <>
@@ -72,6 +72,7 @@ function App() {
         cities,
         weekWeather,
         dayWeather,
+        airDayQuality,
       }}
       >
         <Routes>
