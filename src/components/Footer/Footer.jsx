@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 import GitHubIcon from '@material-ui/icons/GitHub';
-
 
 const HeaderWrapper = styled.footer`
   display: flex;
@@ -19,25 +18,25 @@ const HeaderWrapper = styled.footer`
     margin-left: 10px; 
   }
 
-`
+`;
 
 function footer() {
   return (
-  <HeaderWrapper>
-      <div className='upperFoot'>
-          <span>Get connected with us on social networks:</span>
-          <a href='https://github.com/frankieavina/weather-forecaster-project' className='me-4 text-reset'>
-            <GitHubIcon className='gitIcon'/>
-          </a>        
+    <HeaderWrapper>
+      <div className="upperFoot">
+        <span>Get connected with us on social networks:</span>
+        <a href="https://github.com/frankieavina/weather-forecaster-project" className="me-4 text-reset">
+          <GitHubIcon className="gitIcon" />
+        </a>
       </div>
       <div>
         © 2022 Copyright:
-        <a className='text-reset fw-bold' href='https://frankieavina.com/'>
+        <a className="text-reset fw-bold" href="https://frankieavina.com/">
           frankieavina.com
         </a>
       </div>
-  </HeaderWrapper>
-  )
+    </HeaderWrapper>
+  );
 }
 
-export default footer
+export default footer;
