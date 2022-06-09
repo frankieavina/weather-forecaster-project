@@ -6,7 +6,8 @@ import NotFound from './pages/NotFound';
 import Home from './components/Home/Home';
 import './App.css';
 import WeatherContext from './context/WeatherContext';
-// import {getWeatherData} from './api/GetWeatherData';
+// eslint-disable-next-line import/named
+import { getDayWeatherData, getWeekWeatherData, getDayAirQualityData } from './api/GetWeatherData';
 import CityWeatherDetail from './components/CityDetail/CityWeatherDetail';
 
 import dayWeatherDB from './data/weatherBit-Day-Forecast.json';
@@ -17,15 +18,15 @@ import dayAirQualityDB from './data/weatherBit-Day-Air-Quality.json';
 // import Night from './img/night.png';
 
 function App() {
-  // const [userCoords, setUserCoords] = useState(null);
-  const [weekWeather, setWeekWeather] = useState(null); // remember to put array when pulling
-  const [dayWeather, setDayWeather] = useState(null); // remember to put array when pulling from api
-  const [airDayQuality, setAirDayQuality] = useState(null);// remember to put array when pulling
+  const [userCoords, setUserCoords] = useState(null);
+  const [weekWeather, setWeekWeather] = useState(); // remember to put array when pulling
+  const [dayWeather, setDayWeather] = useState(); // remember to put array when pulling from api
+  const [airDayQuality, setAirDayQuality] = useState();// remember to put array when pulling
   // const [dayNight, setDayNight] = useState('');
   const successHandler = (position) => {
     // eslint-disable-next-line no-unused-vars
     const { latitude, longitude } = position.coords;
-    // setUserCoords({lat:latitude, lng:longitude});
+    setUserCoords({ lat: latitude, lng: longitude });
   };
   const errorHandler = (error) => console.error(error.message);
 
@@ -45,18 +46,43 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // NEED TO DO FOR LOOP TO GET DATA IF THERES MORE CITIES
-    // if(userCoords){
-    //   getWeatherData(userCoords.lat, userCoords.lng)
-    //   .then((data) => {
-    //     console.log(data);
-    //   });
-    // }
+    if (userCoords) {
+      console.log('User Cords:', userCoords);
+      getDayWeatherData(userCoords.lat, userCoords.lng)
+        .then((data) => {
+          if (dayWeather) {
+            setDayWeather((previousState) => [...previousState, { data }]);
+          } else {
+            setDayWeather([data]);
+            console.log('HELLLLOOO', data);
+          }
+        })
+        .then(() => {
+          getWeekWeatherData(userCoords.lat, userCoords.lng)
+            .then((data) => {
+              if (weekWeather) {
+                setWeekWeather((previousState) => [...previousState, { data }]);
+              } else {
+                setWeekWeather([data]);
+              }
+            });
+        })
+        .then(() => {
+          getDayAirQualityData(userCoords.lat, userCoords.lng)
+            .then((data) => {
+              if (airDayQuality) {
+                setAirDayQuality((previousState) => [...previousState, { data }]);
+              } else {
+                setAirDayQuality([data]);
+              }
+            });
+        });
+    }
 
-    setDayWeather(dayWeatherDB);
-    setWeekWeather(weekWeatherDB);
-    setAirDayQuality(dayAirQualityDB);
-  }, [dayWeather, weekWeather, dayAirQualityDB]);
+    // setDayWeather(dayWeatherDB);
+    // setWeekWeather(weekWeatherDB);
+    // setAirDayQuality(dayAirQualityDB);
+  }, [dayWeather, weekWeather, airDayQuality, userCoords]);
 
   return (
     <>

@@ -66,12 +66,12 @@ function CityCard() {
                           <Card.Text>
                             <Container className="cardContainer">
                               <Row className="rowCon">
-                                <Col className="location">{day.city_name}</Col>
-                                <Col className="currentTemp">{day.data[0].temp} &#8457;</Col>
+                                <Col className="location">{day.data.city_name}</Col>
+                                <Col className="currentTemp">{day.data.data[0].temp} &#8457;</Col>
                               </Row>
                               <Row className="rowCon">
-                                <Col className="descrip">{day.data[0].weather.description}</Col>
-                                <Col className="highLow">L:{day.data[0].low_temp} H:{day.data[0].max_temp}</Col>
+                                <Col className="descrip">{day.data.data[0].weather.description}</Col>
+                                <Col className="highLow">L:{day.data.data[0].low_temp} H:{day.data.data[0].max_temp}</Col>
                               </Row>
                             </Container>
                           </Card.Text>
@@ -79,7 +79,7 @@ function CityCard() {
                       </Card>
                     </Accordion.Header>
                     <Accordion.Body>
-                      <CityCardDetail city={day.city_name} />
+                      {/* <CityCardDetail city={day.city_name} /> */}
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>

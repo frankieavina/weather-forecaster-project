@@ -2,16 +2,38 @@ import axios from 'axios';
 
 const API_KEY = process.env.REACT_APP_WEATHER_BIT_API_KEY;
 
-const getWeatherData = async (lat, lng) => {
+const getDayWeatherData = async (lat, lng) => {
   try {
-    const results = await axios.get(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${API_KEY}`);
+    const results = await axios.get(`https://api.weatherbit.io/v2.0/forecast/hourly?lat=${lat}&lon=${lng}&key=${API_KEY}`);
+    console.log('Day:', results);
     return results;
   } catch (error) {
     console.error(`Error: ${error}`);
   }
 };
 
-export default { getWeatherData };
+const getWeekWeatherData = async (lat, lng) => {
+  try {
+    const results = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&key=${API_KEY}`);
+    console.log('Week:', results);
+    console.log(results);
+    return results;
+  } catch (error) {
+    console.error(`Error: ${error}`);
+  }
+};
+
+const getDayAirQualityData = async (lat, lng) => {
+  try {
+    const results = await axios.get(`https://api.weatherbit.io/v2.0/forecast/airquality?lat=${lat}&lon=${lng}&key=${API_KEY}`);
+    console.log('Quality:', results);
+    return results;
+  } catch (error) {
+    console.error(`Error: ${error}`);
+  }
+};
+
+export { getDayWeatherData, getWeekWeatherData, getDayAirQualityData };
 
 // Daily Forecast Info (7 day):
 // Request URL -> https://api.weatherbit.io/v2.0/forecast/daily?lat=37.6166061&lon=-120.9679158&days=7&units=I&key=b3fe975e055648289d71fd9b09c4927e
