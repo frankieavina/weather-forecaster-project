@@ -13,10 +13,10 @@ const Layout = () => {
   return (
     <>
       <GlobalStyle />
-      <Wrapper className='wrapper'>
-        <Header className='header'/>
-        <Outlet className='outlet'/>
-        <Footer className='footer'/>
+      <Wrapper className="wrapper">
+        <Header className="header" />
+        <Outlet className="outlet" />
+        <Footer className="footer" />
       </Wrapper>
     </>
   );

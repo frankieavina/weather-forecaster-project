@@ -1,16 +1,17 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import CloudIcon from '@material-ui/icons/Cloud';
 import ListAltIcon from '@material-ui/icons/ListAlt';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 import {
   Combobox,
   ComboboxInput,
   ComboboxPopover,
   ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import "@reach/combobox/styles.css";
-import usePlacesAutocomplete from "use-places-autocomplete";
+  ComboboxOption
+} from '@reach/combobox';
+import '@reach/combobox/styles.css';
+import usePlacesAutocomplete from 'use-places-autocomplete';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -72,7 +73,6 @@ const HeaderWrapper = styled.header`
   `;
 
 function Header() {
-
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const {
@@ -92,41 +92,41 @@ function Header() {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-  }
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
 
   return (
     <HeaderWrapper>
-      <div className='firstColHeader'>
+      <div className="firstColHeader">
         <div>
-          <CloudIcon className='logo'/>
-          <span className='name'>AWA</span>
+          <CloudIcon className="logo" />
+          <span className="name">AWA</span>
         </div>
         <div>
-            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              <ListAltIcon className='logo'/>
-            </Button>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Edit</MenuItem>
-              <MenuItem onClick={handleClose}>Convert to &#8457; or &#8451;</MenuItem>
-            </Menu>
+          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+            <ListAltIcon className="logo" />
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Edit</MenuItem>
+            <MenuItem onClick={handleClose}>Convert to &#8457; or &#8451;</MenuItem>
+          </Menu>
         </div>
       </div>
-      <div className='secondColHeader'>
+      <div className="secondColHeader">
         <Combobox onSelect={handleSelect} aria-labelledby="demo">
-          <ComboboxInput value={value} onChange={handleInput} disabled={!ready} placeholder='Search for City' className='cityInput' />
+          <ComboboxInput value={value} onChange={handleInput} disabled={!ready} placeholder="Search for City" className="cityInput" />
           <ComboboxPopover>
             <ComboboxList>
-              {status === "OK" &&
+              {status === 'OK' &&
                 data.map(({ place_id, description }) => (
                   <ComboboxOption key={place_id} value={description} />
                 ))}
@@ -136,7 +136,7 @@ function Header() {
       </div>
 
     </HeaderWrapper>
-  )
+  );
 }
 
-export default Header
+export default Header;

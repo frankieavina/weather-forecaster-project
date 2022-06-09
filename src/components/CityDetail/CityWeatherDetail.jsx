@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Route, useParams, useNavigate } from 'react-router'; 
-import styled from "styled-components";
+import { useParams, useNavigate } from 'react-router';
+import styled from 'styled-components';
+import Button from 'react-bootstrap/Button';
 import WeatherContext from '../../context/WeatherContext';
 import HourlyAirQuality from './HourlyAirQuality';
 import HourlyForecast from './HourlyForecast';
 import TenDayForecast from './TenDayForecast';
-import Button from 'react-bootstrap/Button';
 import ForecastDetailsToday from './ForecastDetailsToday';
 
 const DetailsCard = styled.div`
@@ -20,33 +20,30 @@ h1,h3,h4,h6{
   font-weight: bold; 
 }
 
-`
+`;
 
 function CityWeatherDetail() {
-
-  const { id: selectedCity } = useParams(); 
-  const { weekWeather, dayWeather, airDayQuality } = useContext(WeatherContext); 
-  const navigate = useNavigate(); 
- 
+  const { id: selectedCity } = useParams();
+  const { weekWeather, dayWeather, airDayQuality } = useContext(WeatherContext);
+  const navigate = useNavigate();
   const onHandleClick = () => {
-    navigate(`/`)
-  }
-
+    navigate('/');
+  };
   // getting city day weather, week weather, and day air quality info
-  const dayResults = [...dayWeather].filter(obj => {
-    return(
+  const dayResults = [...dayWeather].filter((obj) => {
+    return (
       obj.city_name.match(selectedCity)
-    ); 
+    );
   });
-  const weekResults = [...weekWeather].filter(obj => {
-    return(
+  const weekResults = [...weekWeather].filter((obj) => {
+    return (
       obj.city_name.match(selectedCity)
-    ); 
+    );
   });
-  const airQualityResults = [...airDayQuality].filter(obj => {
-    return(
+  const airQualityResults = [...airDayQuality].filter((obj) => {
+    return (
       obj.city_name.match(selectedCity)
-    ); 
+    );
   });
 
   return (
@@ -56,17 +53,17 @@ function CityWeatherDetail() {
       <h4>{weekWeather[0].data[0].weather.description}</h4>
       <h6>H:{weekWeather[0].data[0].max_temp}&#8457; L:{weekWeather[0].data[0].low_temp}&#8457;</h6>
 
-      <HourlyForecast dayResults={dayResults}/>
-      <TenDayForecast weekResults={weekResults}/>
-      <HourlyAirQuality aqi={airQualityResults[0].data[0].aqi}/>
-      <ForecastDetailsToday dayResults={weekWeather[0].data[0]}/>
+      <HourlyForecast dayResults={dayResults} />
+      <TenDayForecast weekResults={weekResults} />
+      <HourlyAirQuality aqi={airQualityResults[0].data[0].aqi} />
+      <ForecastDetailsToday dayResults={weekWeather[0].data[0]} />
 
       <div>
-      <Button variant="primary" onClick={onHandleClick}>Back Home</Button>
+        <Button variant="primary" onClick={onHandleClick}>Back Home</Button>
       </div>
-      
+
     </DetailsCard>
-  )
+  );
 }
 
-export default CityWeatherDetail
+export default CityWeatherDetail;

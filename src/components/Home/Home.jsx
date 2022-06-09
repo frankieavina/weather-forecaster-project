@@ -1,10 +1,10 @@
-import React from 'react'
-import CityList from '../CityList/CityList'; 
+import React from 'react';
+import CityList from '../CityList/CityList';
 
 function Home() {
   return (
-    <CityList/>
-  )
+    <CityList />
+  );
 }
 
-export default Home
+export default Home;
