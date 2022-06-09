@@ -10,7 +10,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 function ForecastDetailsToday({ dayResults }) {
   return (
-    <div style={{ width: '50%' }}>
+    <div style={{ width: '50%', zIndex: '1' }}>
       {(dayResults)
         ? (
           <Card style={{ margin: '1rem 0' }}>
