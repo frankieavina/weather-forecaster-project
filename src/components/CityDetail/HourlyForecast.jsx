@@ -20,7 +20,7 @@ function HourlyForecast({ dayResults }) {
               </Card.Title>
               <Card.Text className="cards">
 
-                {dayResults.data.map((hourData) => (
+                {dayResults[0].data.map((hourData) => (
                   <Card style={{ width: '4.5rem', margin: '0 0.1rem' }}>
                     <Card.Body>
                       <Card.Text>
