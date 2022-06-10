@@ -8,6 +8,7 @@ import { Row, Container } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 
 function HourlyForecast({ dayResults }) {
+  console.log('HEEEYYYY:', dayResults);
   return (
     <>
       {(dayResults)
