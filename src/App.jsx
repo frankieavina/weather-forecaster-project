@@ -6,7 +6,8 @@ import NotFound from './pages/NotFound';
 import Home from './components/Home/Home';
 import './App.css';
 import WeatherContext from './context/WeatherContext';
-// import {getWeatherData} from './api/GetWeatherData';
+// eslint-disable-next-line import/named
+import { getDayWeatherData, getWeekWeatherData, getDayAirQualityData } from './api/GetWeatherData';
 import CityWeatherDetail from './components/CityDetail/CityWeatherDetail';
 
 import dayWeatherDB from './data/weatherBit-Day-Forecast.json';
@@ -17,15 +18,45 @@ import dayAirQualityDB from './data/weatherBit-Day-Air-Quality.json';
 // import Night from './img/night.png';
 
 function App() {
-  // const [userCoords, setUserCoords] = useState(null);
-  const [weekWeather, setWeekWeather] = useState(null); // remember to put array when pulling
-  const [dayWeather, setDayWeather] = useState(null); // remember to put array when pulling from api
-  const [airDayQuality, setAirDayQuality] = useState(null);// remember to put array when pulling
-  // const [dayNight, setDayNight] = useState('');
+  const [weekWeather, setWeekWeather] = useState(); // remember to put array when pulling
+  const [dayWeather, setDayWeather] = useState(); // remember to put array when pulling from api
+  const [airDayQuality, setAirDayQuality] = useState();// remember to put array when pulling
+
+  const apiCalls = async (lat, lng) => {
+    await getDayWeatherData(lat, lng)
+      .then((data) => {
+        if (dayWeather) {
+          setDayWeather((previousState) => [...previousState, { ...data }]);
+        } else {
+          setDayWeather([data]);
+        }
+      })
+      .then(() => {
+        getWeekWeatherData(lat, lng)
+          .then((data) => {
+            if (weekWeather) {
+              setWeekWeather((previousState) => [...previousState, { ...data }]);
+            } else {
+              setWeekWeather([data]);
+            }
+          });
+      })
+      .then(() => {
+        getDayAirQualityData(lat, lng)
+          .then((data) => {
+            if (airDayQuality) {
+              setAirDayQuality((previousState) => [...previousState, { ...data }]);
+            } else {
+              setAirDayQuality([data]);
+            }
+          });
+      });
+  };
+
   const successHandler = (position) => {
     // eslint-disable-next-line no-unused-vars
     const { latitude, longitude } = position.coords;
-    // setUserCoords({lat:latitude, lng:longitude});
+    apiCalls(latitude, longitude);
   };
   const errorHandler = (error) => console.error(error.message);
 
@@ -33,30 +64,9 @@ function App() {
     if (!navigator.geolocation) {
       console.error('Geolocation is not supported.');
     } else {
-      // const today = new Date().getHours();
-      // if(today >= 9 && today <= 19){
-      //   setDayNight(Day);
-      // }
-      // else{
-      //   setDayNight(Night);
-      // }
       navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
     }
   }, []);
-
-  useEffect(() => {
-    // NEED TO DO FOR LOOP TO GET DATA IF THERES MORE CITIES
-    // if(userCoords){
-    //   getWeatherData(userCoords.lat, userCoords.lng)
-    //   .then((data) => {
-    //     console.log(data);
-    //   });
-    // }
-
-    setDayWeather(dayWeatherDB);
-    setWeekWeather(weekWeatherDB);
-    setAirDayQuality(dayAirQualityDB);
-  }, [dayWeather, weekWeather, dayAirQualityDB]);
 
   return (
     <>
@@ -69,6 +79,7 @@ function App() {
             weekWeather,
             dayWeather,
             airDayQuality,
+            setNewCity: (lat, lng) => apiCalls(lat, lng)
           }}
         >
           <Routes>

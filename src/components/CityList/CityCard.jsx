@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Accordion from 'react-bootstrap/Accordion';
@@ -46,6 +47,14 @@ const CardWrapper = styled.header`
 function CityCard() {
   const { weekWeather } = useContext(WeatherContext);
   const [isLoading, setIsLoading] = useState(true);
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     console.log('Timeout');
+  //     setIsLoading(false);
+  //   }, 5000);
+  // }, [weekWeather]);
 
   useEffect(() => {
     setIsLoading(weekWeather ? false : true);

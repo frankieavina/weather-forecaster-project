@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useContext } from 'react';
 import CloudIcon from '@material-ui/icons/Cloud';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import styled from 'styled-components';
@@ -11,10 +12,12 @@ import {
   ComboboxOption
 } from '@reach/combobox';
 import '@reach/combobox/styles.css';
-import usePlacesAutocomplete from 'use-places-autocomplete';
+import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import WeatherContext from '../../context/WeatherContext';
+import getCoordinates from '../../api/getLocation';
 
 const HeaderWrapper = styled.header`
   display: flex; 
@@ -74,20 +77,41 @@ const HeaderWrapper = styled.header`
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const { setNewCity } = useContext(WeatherContext);
   const {
     ready,
     value,
     suggestions: { status, data },
     setValue,
-  } = usePlacesAutocomplete();
+    clearSuggestions
+  } = usePlacesAutocomplete({
+    requestOptions: {
+      location: { lat: () => 36.7394421, lng: () => -119.7848307 },
+      radius: 200 * 1000,
+    }
+  });
 
   const handleInput = (e) => {
     setValue(e.target.value);
   };
 
-  const handleSelect = (val) => {
-    setValue(val, false);
+  const handleSelect = (location) => {
+    setValue(location, false);
+    getCoordinates(location)
+      .then((results) => {
+        setNewCity(parseFloat(results.data[0].lat), parseFloat(results.data[0].lon));
+      });
+    clearSuggestions();
+
+    // getGeocode({ address: description }).then((results) => {
+    //   try {
+    //     const { lat, lng } = getLatLng(results[0]);
+    //     console.log(lat, lng);
+    //     setNewCity(lat, lng);
+    //   } catch (error) {
+    //     console.log('Error:', error);
+    //   }
+    // });
   };
 
   const handleClick = (event) => {

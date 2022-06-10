@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import styled from 'styled-components';
