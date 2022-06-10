@@ -9,6 +9,13 @@ import Header from './components/Header/Header';
 test(
   'User should input a city and get autocomplete city',
   () => {
-    const searchBar = screen.getByRole
+    render(<Header />);
+    const input = screen.getByRole('textbox');
+
+    const event = new Event('change');
+    input.value = 'bar';
+    input.dispatchEvent(event);
+
+    expect(input).toHaveValue('bar');
   }
-)
+);

@@ -19,8 +19,6 @@ function CityCardDetail({ city }) {
     );
   });
 
-  console.log(result);
-
   const onHandleClick = () => {
     navigate(`city-weather-details/${city}`);
   };
