@@ -19,3 +19,11 @@ test(
     expect(input).toHaveValue('bar');
   }
 );
+
+jest.mock('./api/getLocation');
+
+it('Getting latitude and longitude from city name', async () => {
+  expect.assertions(1);
+  const data = await user.getUserName(4);
+  expect(data).toEqual('coordinates');
+});
