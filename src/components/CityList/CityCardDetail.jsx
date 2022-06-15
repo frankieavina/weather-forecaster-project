@@ -4,13 +4,14 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import { Row, Container } from 'react-bootstrap';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import WeatherContext from '../../context/WeatherContext';
 import '../../App.css';
 
 function CityCardDetail({ city }) {
-  const { dayWeather } = useContext(WeatherContext);
+  const { dayWeather, setDelete } = useContext(WeatherContext);
   const navigate = useNavigate();
 
   const result = [...dayWeather].filter((obj) => {
@@ -21,6 +22,10 @@ function CityCardDetail({ city }) {
 
   const onHandleClick = () => {
     navigate(`city-weather-details/${city}`);
+  };
+
+  const onDelete = (name) => {
+    setDelete(name);
   };
 
   return (
@@ -56,7 +61,8 @@ function CityCardDetail({ city }) {
                 ))}
 
               </Card.Text>
-              <Button variant="primary" onClick={onHandleClick}>View Details</Button>
+              <Button variant="primary" onClick={onHandleClick} style={{ marginRight: '0.5rem' }}>View Details</Button>
+              <Button variant="danger" onClick={() => onDelete(result[0].city_name)}> <DeleteForeverIcon className="deleteIcon" /> Delete</Button>
             </Card.Body>
           </Card>
         )

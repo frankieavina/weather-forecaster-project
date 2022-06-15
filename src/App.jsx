@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -79,7 +81,10 @@ function App() {
             weekWeather,
             dayWeather,
             airDayQuality,
-            setNewCity: (lat, lng) => apiCalls(lat, lng)
+            setNewCity: (lat, lng) => apiCalls(lat, lng),
+            setDelete: (city) => {
+              setWeekWeather([...weekWeather].filter((cityObj) => cityObj.city_name != city));
+            },
           }}
         >
           <Routes>

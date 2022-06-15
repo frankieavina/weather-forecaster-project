@@ -5,7 +5,6 @@ const API_KEY = process.env.REACT_APP_WEATHER_BIT_API_KEY;
 const getDayWeatherData = async (lat, lng) => {
   try {
     const results = await axios.get(`https://api.weatherbit.io/v2.0/forecast/hourly?lat=${lat}&lon=${lng}&units=I&key=${API_KEY}&hours=8`);
-    // console.log('HEEEEEE:', results.data);
     return results.data;
   } catch (error) {
     console.error(`Error: ${error}`);

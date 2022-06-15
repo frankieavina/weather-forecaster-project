@@ -77,7 +77,7 @@ const HeaderWrapper = styled.header`
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { setNewCity } = useContext(WeatherContext);
+  const { setNewCity, setEdit } = useContext(WeatherContext);
   const {
     ready,
     value,
@@ -102,16 +102,6 @@ function Header() {
         setNewCity(parseFloat(results.data[0].lat), parseFloat(results.data[0].lon));
       });
     clearSuggestions();
-
-    // getGeocode({ address: description }).then((results) => {
-    //   try {
-    //     const { lat, lng } = getLatLng(results[0]);
-    //     console.log(lat, lng);
-    //     setNewCity(lat, lng);
-    //   } catch (error) {
-    //     console.log('Error:', error);
-    //   }
-    // });
   };
 
   const handleClick = (event) => {
