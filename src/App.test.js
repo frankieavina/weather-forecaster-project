@@ -33,14 +33,12 @@ describe('User should input a city and get autocomplete city', () => {
 // ************************** UNIT TESTING GEOCODE API CALL FUNCTION *************************/
 // describe block are useful for grouping set of tests for the output of running tests
 
-describe('Test API functions', () => {
-  test('should return the first entry from the api', async () => {
-    const data = await getCoordinates('Fresno,CA,USA');
-    // I've added this for troubleshooting
-    // console.log(data);
-    expect(data.data[0].lat).toBe('36.7394421');
-  });
-});
+// describe('Test API functions', () => {
+//   test('should return the first entry from the api', async () => {
+//     const data = await getCoordinates('Fresno,CA,USA');
+//     expect(data.data[0].lat).toBe('36.7394421');
+//   });
+// });
 
 // To mock an API call in a function, you just need to do these 3 steps:
 

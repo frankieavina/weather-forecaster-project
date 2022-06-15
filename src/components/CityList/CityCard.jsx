@@ -10,7 +10,7 @@ import CityCardDetail from './CityCardDetail';
 import '../../App.css';
 import WeatherContext from '../../context/WeatherContext';
 
-const CardWrapper = styled.header`
+const CardWrapper = styled.div`
     width: 50%; 
     margin: 0 auto; 
     margin-top: 2rem; 
@@ -42,6 +42,10 @@ const CardWrapper = styled.header`
     .rowCon{
         padding: 1rem; 
     }
+    .deleteIcon:hover{
+      cursor: pointer;
+      background-color: red;
+    }
 `;
 
 function CityCard() {
@@ -58,33 +62,35 @@ function CityCard() {
         ? (
           <>
             { weekWeather.map((day) => (
-              <CardWrapper>
-                <Accordion defaultActiveKey="0">
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>
-                      <Card className="card">
-                        <Card.Body className="cardBody">
-                          <Card.Text>
-                            <Container className="cardContainer">
-                              <Row className="rowCon">
-                                <Col className="location">{day.city_name}</Col>
-                                <Col className="currentTemp">{day.data[0].temp} &#8457;</Col>
-                              </Row>
-                              <Row className="rowCon">
-                                <Col className="descrip">{day.data[0].weather.description}</Col>
-                                <Col className="highLow">L:{day.data[0].low_temp} H:{day.data[0].max_temp}</Col>
-                              </Row>
-                            </Container>
-                          </Card.Text>
-                        </Card.Body>
-                      </Card>
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <CityCardDetail city={day.city_name} />
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-              </CardWrapper>
+              <>
+                <CardWrapper>
+                  <Accordion defaultActiveKey="0">
+                    <Accordion.Item eventKey="1">
+                      <Accordion.Header>
+                        <Card className="card">
+                          <Card.Body className="cardBody">
+                            <Card.Text>
+                              <Container className="cardContainer">
+                                <Row className="rowCon">
+                                  <Col className="location"> {day.city_name}</Col>
+                                  <Col className="currentTemp">{day.data[0].temp} &#8457;</Col>
+                                </Row>
+                                <Row className="rowCon">
+                                  <Col className="descrip">{day.data[0].weather.description}</Col>
+                                  <Col className="highLow">L:{day.data[0].low_temp} H:{day.data[0].max_temp}</Col>
+                                </Row>
+                              </Container>
+                            </Card.Text>
+                          </Card.Body>
+                        </Card>
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <CityCardDetail city={day.city_name} />
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                </CardWrapper>
+              </>
             ))}
           </>
         )
