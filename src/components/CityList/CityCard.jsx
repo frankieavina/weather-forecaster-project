@@ -48,14 +48,6 @@ function CityCard() {
   const { weekWeather } = useContext(WeatherContext);
   const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   setTimeout(() => {
-  //     console.log('Timeout');
-  //     setIsLoading(false);
-  //   }, 5000);
-  // }, [weekWeather]);
-
   useEffect(() => {
     setIsLoading(weekWeather ? false : true);
   }, [weekWeather]);
