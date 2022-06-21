@@ -1,8 +1,10 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable eqeqeq */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
 import Home from './components/Home/Home';
@@ -11,18 +13,22 @@ import WeatherContext from './context/WeatherContext';
 // eslint-disable-next-line import/named
 import { getDayWeatherData, getWeekWeatherData, getDayAirQualityData } from './api/GetWeatherData';
 import CityWeatherDetail from './components/CityDetail/CityWeatherDetail';
-
-import dayWeatherDB from './data/weatherBit-Day-Forecast.json';
-import weekWeatherDB from './data/weatherBit-Week-Forecast.json';
-import dayAirQualityDB from './data/weatherBit-Day-Air-Quality.json';
+import { addCityWeekWeather, deleteCityWeekWeather, setCityWeekWeather } from './store/weatherSlice';
 
 // import Day from './img/day.png';
 // import Night from './img/night.png';
 
 function App() {
-  const [weekWeather, setWeekWeather] = useState(); // remember to put array when pulling
-  const [dayWeather, setDayWeather] = useState(); // remember to put array when pulling from api
-  const [airDayQuality, setAirDayQuality] = useState();// remember to put array when pulling
+// Now we can use the React-Redux hooks to let React components interact with the Redux
+// store. We can read data from the store with useSelector, and dispatch actions using useDispatch.
+// The corresponding Redux action will be dispatched to the store
+// The counter slice reducer will see the actions and update its state
+// The <Counter> component will see the new state value from the store and re-render itself with the new data
+  const dispatch = useDispatch();
+  const weekData = useSelector((state) => state.weekData?.value);
+  const [dayWeather, setDayWeather] = useState();
+  const [airDayQuality, setAirDayQuality] = useState();
+  const [init, setInit] = useState(true);
 
   const apiCalls = async (lat, lng) => {
     await getDayWeatherData(lat, lng)
@@ -36,10 +42,11 @@ function App() {
       .then(() => {
         getWeekWeatherData(lat, lng)
           .then((data) => {
-            if (weekWeather) {
-              setWeekWeather((previousState) => [...previousState, { ...data }]);
+            if (init) {
+              dispatch(setCityWeekWeather(data));
+              setInit(false);
             } else {
-              setWeekWeather([data]);
+              dispatch(addCityWeekWeather(data));
             }
           });
       })
@@ -68,6 +75,7 @@ function App() {
     } else {
       navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
     }
+    console.log('UseEffect:', weekData);
   }, []);
 
   return (
@@ -78,13 +86,13 @@ function App() {
       >
         <WeatherContext.Provider
           value={{
-            weekWeather,
+            weekWeather: weekData,
             dayWeather,
             airDayQuality,
             setNewCity: (lat, lng) => apiCalls(lat, lng),
-            setDelete: (city) => {
-              setWeekWeather([...weekWeather].filter((cityObj) => cityObj.city_name != city));
-            },
+            // setDelete: (city) => {
+            //   setWeekWeather([...weekWeather].filter((cityObj) => cityObj.city_name != city));
+            // },
           }}
         >
           <Routes>

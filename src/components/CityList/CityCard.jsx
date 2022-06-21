@@ -1,6 +1,8 @@
+/* eslint-disable import/order */
 /* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
@@ -49,19 +51,19 @@ const CardWrapper = styled.div`
 `;
 
 function CityCard() {
-  const { weekWeather } = useContext(WeatherContext);
+  const weekData = useSelector((state) => state.weekData.value);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(weekWeather ? false : true);
-  }, [weekWeather]);
+    setIsLoading(weekData ? false : true);
+  }, [weekData]);
 
   return (
     <>
       {(!isLoading)
         ? (
           <>
-            { weekWeather.map((day) => (
+            { weekData.map((day) => (
               <>
                 <CardWrapper>
                   <Accordion defaultActiveKey="0">
@@ -85,7 +87,7 @@ function CityCard() {
                         </Card>
                       </Accordion.Header>
                       <Accordion.Body>
-                        <CityCardDetail city={day.city_name} />
+                        {/* <CityCardDetail city={day.city_name} /> */}
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
