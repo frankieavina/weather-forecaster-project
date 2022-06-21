@@ -30,7 +30,7 @@ export const weatherSlice = createSlice({
     },
     deleteCityWeekWeather(state, { payload }) {
     // [...weekWeather].filter((cityObj) => cityObj.city_name != city)
-      state.value = [...state].filter((cityObj) => cityObj.city_name !== payload);
+      state.value = [...state.value].filter((cityObj) => cityObj.city_name !== payload);
     },
   },
 });

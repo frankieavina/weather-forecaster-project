@@ -90,9 +90,9 @@ function App() {
             dayWeather,
             airDayQuality,
             setNewCity: (lat, lng) => apiCalls(lat, lng),
-            // setDelete: (city) => {
-            //   setWeekWeather([...weekWeather].filter((cityObj) => cityObj.city_name != city));
-            // },
+            setDelete: (city) => {
+              dispatch(deleteCityWeekWeather(city));
+            },
           }}
         >
           <Routes>

@@ -87,7 +87,7 @@ function CityCard() {
                         </Card>
                       </Accordion.Header>
                       <Accordion.Body>
-                        {/* <CityCardDetail city={day.city_name} /> */}
+                        <CityCardDetail city={day.city_name} />
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
