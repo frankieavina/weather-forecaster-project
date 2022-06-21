@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import WeatherContext from '../../context/WeatherContext';
@@ -24,8 +25,9 @@ h1,h3,h4,h6{
 `;
 
 function CityWeatherDetail() {
+  const weekData = useSelector((state) => state.weekData?.value);
   const { id: selectedCity } = useParams();
-  const { weekWeather, dayWeather, airDayQuality } = useContext(WeatherContext);
+  const { dayWeather, airDayQuality } = useContext(WeatherContext);
   const navigate = useNavigate();
   const onHandleClick = () => {
     navigate('/');
@@ -36,7 +38,7 @@ function CityWeatherDetail() {
       obj.city_name.match(selectedCity)
     );
   });
-  const weekResults = [...weekWeather].filter((obj) => {
+  const weekResults = [...weekData].filter((obj) => {
     return (
       obj.city_name.match(selectedCity)
     );
@@ -51,13 +53,13 @@ function CityWeatherDetail() {
     <DetailsCard>
       <h1>{dayResults[0].city_name}</h1>
       <h3>{weekResults[0].data[0].temp}&#8457;</h3>
-      <h4>{weekWeather[0].data[0].weather.description}</h4>
-      <h6>H:{weekWeather[0].data[0].max_temp}&#8457; L:{weekWeather[0].data[0].low_temp}&#8457;</h6>
+      <h4>{weekData[0].data[0].weather.description}</h4>
+      <h6>H:{weekData[0].data[0].max_temp}&#8457; L:{weekData[0].data[0].low_temp}&#8457;</h6>
 
       <HourlyForecast dayResults={dayResults} />
       <TenDayForecast weekResults={weekResults} />
       <HourlyAirQuality aqi={airQualityResults[0].data[0].aqi} />
-      <ForecastDetailsToday dayResults={weekWeather[0].data[0]} />
+      <ForecastDetailsToday dayResults={weekData[0].data[0]} />
 
       <div>
         <Button variant="primary" onClick={onHandleClick}>Back Home</Button>
