@@ -19,12 +19,11 @@ import { addCityWeekWeather, deleteCityWeekWeather, setCityWeekWeather } from '.
 // import Night from './img/night.png';
 
 function App() {
-// Now we can use the React-Redux hooks to let React components interact with the Redux
-// store. We can read data from the store with useSelector, and dispatch actions using useDispatch.
-// The corresponding Redux action will be dispatched to the store
-// The counter slice reducer will see the actions and update its state
-// The <Counter> component will see the new state value from the store and re-render itself with the new data
   const dispatch = useDispatch();
+  // useSelector will compare the content of object, if they are same it won't rerender (shallowEqual)
+  // As you are returning primitive value from selector so it won't make a difference if you use shallowCopy
+  // or not.
+  // you can use shallowEquals when you select an object that might be similar in contents but different by reference.
   const weekData = useSelector((state) => state.weekData?.value);
   const [dayWeather, setDayWeather] = useState();
   const [airDayQuality, setAirDayQuality] = useState();
