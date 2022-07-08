@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/Col';
 import CityCardDetail from './CityCardDetail';
 import '../../App.css';
 import WeatherContext from '../../context/WeatherContext';
+import Loading from '../Loading/Loading';
 
 const CardWrapper = styled.div`
     width: 50%; 
@@ -96,7 +97,7 @@ function CityCard() {
             ))}
           </>
         )
-        : <h3>Loading ...</h3> }
+        : <Loading /> }
     </>
 
   );
