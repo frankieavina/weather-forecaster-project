@@ -1,8 +1,23 @@
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const weekWeather = [];
+const API_KEY = process.env.REACT_APP_WEATHER_BIT_API_KEY;
+
+export const getWeekResults = createAsyncThunk(
+  'search/getResults',
+  async ({ lat, lng }) => {
+    const getWeekWeatherData = async (lat, lng) => {
+      try {
+        const results = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&days=7&units=I&key=${API_KEY}`);
+        return results.data;
+      } catch (error) {
+        console.error(`Error: ${error}`);
+      }
+    };
+  }
+);
 
 // Creating a slice requires a string name to identify the slice, an initial state value,
 // and one or more reducer functions to define how the state can be updated. Once a slice
@@ -11,7 +26,9 @@ const weekWeather = [];
 export const weatherSlice = createSlice({
   name: 'weekData',
   initialState: {
-    value: weekWeather,
+    loading: false,
+    error: false,
+    value: '',
   },
   // # @reduxjs/toolkit's `createSlice()` method uses immer behind the scenes to avoid
   // state mutation errors; thanks to immer, we are able to "mutate" our state values directly
@@ -32,6 +49,23 @@ export const weatherSlice = createSlice({
     // [...weekWeather].filter((cityObj) => cityObj.city_name != city)
       state.value = [...state.value].filter((cityObj) => cityObj.city_name !== payload);
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getWeekResults.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getWeekResults.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        if (state.value) {
+          state.value = [...state.value, payload];
+        } else {
+          state.value = [payload];
+        }
+      })
+      .addCase(getWeekResults.rejected, (state) => {
+        state.error = true;
+      });
   },
 });
 

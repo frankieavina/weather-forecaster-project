@@ -11,9 +11,9 @@ import Home from './components/Home/Home';
 import './App.css';
 import WeatherContext from './context/WeatherContext';
 // eslint-disable-next-line import/named
-import { getDayWeatherData, getWeekWeatherData, getDayAirQualityData } from './api/GetWeatherData';
+import { getDayWeatherData, getDayAirQualityData } from './api/GetWeatherData';
 import CityWeatherDetail from './components/CityDetail/CityWeatherDetail';
-import { addCityWeekWeather, deleteCityWeekWeather, setCityWeekWeather } from './store/weatherSlice';
+import { addCityWeekWeather, deleteCityWeekWeather, setCityWeekWeather, getWeekResults } from './store/weatherSlice';
 
 // import Day from './img/day.png';
 // import Night from './img/night.png';
@@ -39,15 +39,7 @@ function App() {
         }
       })
       .then(() => {
-        getWeekWeatherData(lat, lng)
-          .then((data) => {
-            if (init) {
-              dispatch(setCityWeekWeather(data));
-              setInit(false);
-            } else {
-              dispatch(addCityWeekWeather(data));
-            }
-          });
+        getWeekResults({ lat, lng });
       })
       .then(() => {
         getDayAirQualityData(lat, lng)
@@ -74,7 +66,6 @@ function App() {
     } else {
       navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
     }
-    console.log('UseEffect:', weekData);
   }, []);
 
   return (
