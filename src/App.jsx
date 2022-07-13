@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable object-shorthand */
 /* eslint-disable spaced-comment */
 /* eslint-disable eqeqeq */
 /* eslint-disable max-len */
@@ -11,9 +13,9 @@ import Home from './components/Home/Home';
 import './App.css';
 import WeatherContext from './context/WeatherContext';
 // eslint-disable-next-line import/named
-import { getDayWeatherData, getWeekWeatherData, getDayAirQualityData } from './api/GetWeatherData';
+import { getDayWeatherData, getDayAirQualityData } from './api/GetWeatherData';
 import CityWeatherDetail from './components/CityDetail/CityWeatherDetail';
-import { addCityWeekWeather, deleteCityWeekWeather, setCityWeekWeather } from './store/weatherSlice';
+import { addCityWeekWeather, deleteCityWeekWeather, setCityWeekWeather, getWeekResults } from './store/weatherSlice';
 
 // import Day from './img/day.png';
 // import Night from './img/night.png';
@@ -24,7 +26,7 @@ function App() {
   // As you are returning primitive value from selector so it won't make a difference if you use shallowCopy
   // or not.
   // you can use shallowEquals when you select an object that might be similar in contents but different by reference.
-  const weekData = useSelector((state) => state.weekData?.value);
+  const weekData = useSelector((state) => state.weekData?.value, shallowEqual);
   const [dayWeather, setDayWeather] = useState();
   const [airDayQuality, setAirDayQuality] = useState();
   const [init, setInit] = useState(true);
@@ -39,15 +41,7 @@ function App() {
         }
       })
       .then(() => {
-        getWeekWeatherData(lat, lng)
-          .then((data) => {
-            if (init) {
-              dispatch(setCityWeekWeather(data));
-              setInit(false);
-            } else {
-              dispatch(addCityWeekWeather(data));
-            }
-          });
+        dispatch(getWeekResults({ lat: lat, lng: lng }));
       })
       .then(() => {
         getDayAirQualityData(lat, lng)
@@ -74,7 +68,6 @@ function App() {
     } else {
       navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
     }
-    console.log('UseEffect:', weekData);
   }, []);
 
   return (

@@ -11,14 +11,14 @@ const getDayWeatherData = async (lat, lng) => {
   }
 };
 
-const getWeekWeatherData = async (lat, lng) => {
-  try {
-    const results = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&days=7&units=I&key=${API_KEY}`);
-    return results.data;
-  } catch (error) {
-    console.error(`Error: ${error}`);
-  }
-};
+// const getWeekWeatherData = async (lat, lng) => {
+//   try {
+//     const results = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&days=7&units=I&key=${API_KEY}`);
+//     return results.data;
+//   } catch (error) {
+//     console.error(`Error: ${error}`);
+//   }
+// };
 
 const getDayAirQualityData = async (lat, lng) => {
   try {
@@ -29,4 +29,4 @@ const getDayAirQualityData = async (lat, lng) => {
   }
 };
 
-export { getDayWeatherData, getWeekWeatherData, getDayAirQualityData };
+export { getDayWeatherData, getDayAirQualityData };

@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/Col';
 import CityCardDetail from './CityCardDetail';
 import '../../App.css';
 import WeatherContext from '../../context/WeatherContext';
+import Loading from '../Loading/Loading';
 
 const CardWrapper = styled.div`
     width: 50%; 
@@ -96,7 +97,7 @@ function CityCard() {
             ))}
           </>
         )
-        : <h3>Loading ...</h3> }
+        : <Loading /> }
     </>
 
   );

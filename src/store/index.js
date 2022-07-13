@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import weatherReducer from './weatherSlice';
+import userReducer from './userSlice';
 
 // This creates a Redux store, and also automatically configure the Redux
 // DevTools extension so that you can inspect the store while developing.
@@ -8,6 +9,6 @@ import weatherReducer from './weatherSlice';
 export default configureStore({
   reducer: {
     weekData: weatherReducer,
-
+    userData: userReducer
   },
 });
