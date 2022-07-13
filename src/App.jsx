@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable object-shorthand */
 /* eslint-disable spaced-comment */
 /* eslint-disable eqeqeq */
 /* eslint-disable max-len */
@@ -24,7 +26,7 @@ function App() {
   // As you are returning primitive value from selector so it won't make a difference if you use shallowCopy
   // or not.
   // you can use shallowEquals when you select an object that might be similar in contents but different by reference.
-  const weekData = useSelector((state) => state.weekData?.value);
+  const weekData = useSelector((state) => state.weekData?.value, shallowEqual);
   const [dayWeather, setDayWeather] = useState();
   const [airDayQuality, setAirDayQuality] = useState();
   const [init, setInit] = useState(true);
@@ -39,7 +41,7 @@ function App() {
         }
       })
       .then(() => {
-        getWeekResults({ lat, lng });
+        dispatch(getWeekResults({ lat: lat, lng: lng }));
       })
       .then(() => {
         getDayAirQualityData(lat, lng)

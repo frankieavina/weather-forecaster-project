@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import WeatherContext from '../../context/WeatherContext';

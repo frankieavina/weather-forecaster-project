@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
@@ -8,14 +9,9 @@ const API_KEY = process.env.REACT_APP_WEATHER_BIT_API_KEY;
 export const getWeekResults = createAsyncThunk(
   'search/getResults',
   async ({ lat, lng }) => {
-    const getWeekWeatherData = async (lat, lng) => {
-      try {
-        const results = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&days=7&units=I&key=${API_KEY}`);
-        return results.data;
-      } catch (error) {
-        console.error(`Error: ${error}`);
-      }
-    };
+    const results = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&days=7&units=I&key=${API_KEY}`);
+    console.log('Week Weather:', results.data);
+    return results.data;
   }
 );
 
@@ -46,7 +42,6 @@ export const weatherSlice = createSlice({
       state.value = [...state.value, payload];
     },
     deleteCityWeekWeather(state, { payload }) {
-    // [...weekWeather].filter((cityObj) => cityObj.city_name != city)
       state.value = [...state.value].filter((cityObj) => cityObj.city_name !== payload);
     },
   },
@@ -57,11 +52,11 @@ export const weatherSlice = createSlice({
       })
       .addCase(getWeekResults.fulfilled, (state, { payload }) => {
         state.loading = false;
-        if (state.value) {
-          state.value = [...state.value, payload];
-        } else {
-          state.value = [payload];
-        }
+        // if (state.value) {
+        state.value = [...state.value, payload];
+        // } else {
+        //   state.value = [payload];
+        // }
       })
       .addCase(getWeekResults.rejected, (state) => {
         state.error = true;

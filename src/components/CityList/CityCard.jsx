@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
