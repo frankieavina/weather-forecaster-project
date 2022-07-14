@@ -8,12 +8,13 @@ export const userLogIn = createAsyncThunk(
   'search/getResults',
   async ({ email, password }) => {
     const backendRes = await axios
-      .post('/api/user', {
+      .post('http://localhost:8000/api/signin', {
         email: email,
         password: password
+      })
+      .then((res) => {
+        console.log(res);
       });
-    const searchResults = await backendRes.json();
-    return searchResults;
   }
 );
 

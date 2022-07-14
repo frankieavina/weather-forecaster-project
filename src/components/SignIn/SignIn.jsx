@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { userLogIn } from '../../store/userSlice';
 
 function SignIn() {
   const [password, setPassword] = useState(null);
@@ -10,18 +11,18 @@ function SignIn() {
 
   const submitForm = (event) => {
     event.preventDefault();
-    dispatch(userLogIn({email: email, password: password}));
-  }
+    dispatch(userLogIn({ email, password }));
+  };
 
-  const handleInputChange = () =>{
-    const { email, password} = e.target;
+  const handleInputChange = (e) => {
+    const { email, password } = e.target;
     setEmail(email);
     setPassword(password);
+  };
 
-  }
   return (
     <div>
-      <form onSubmit={submitForm}> 
+      <form onSubmit={submitForm}>
         <label className="label" htmlFor="email">Email</label>
         <input
           id="email"
@@ -29,16 +30,18 @@ function SignIn() {
           onChange={handleInputChange}
           className="input"
           value={email}
-          type="email"/>
+          type="email"
+        />
         <label className="label" htmlFor="password">Password</label>
-        <input 
+        <input
           id="password"
           name="password"
-          onChange={handleInputChange} 
+          onChange={handleInputChange}
           className="input"
-          value={password} 
-          type="password" />
-        <button onClick={handleSubmit} className="btn" type="submit">
+          value={password}
+          type="password"
+        />
+        <button className="btn" type="submit">
           Submit
         </button>
       </form>

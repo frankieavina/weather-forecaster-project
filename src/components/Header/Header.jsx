@@ -1,6 +1,8 @@
+/* eslint-disable quotes */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CloudIcon from '@material-ui/icons/Cloud';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import styled from 'styled-components';
@@ -16,6 +18,7 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocom
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import WeatherContext from '../../context/WeatherContext';
 import getCoordinates from '../../api/getLocation';
 
@@ -90,6 +93,7 @@ function Header() {
       radius: 200 * 1000,
     }
   });
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
     setValue(e.target.value);
@@ -112,6 +116,14 @@ function Header() {
     setAnchorEl(null);
   };
 
+  const handleSignIn = () => {
+    navigate(`sign-in/`);
+  };
+
+  const handleLogout = () => {
+    console.log('Logout!');
+  };
+
   return (
     <HeaderWrapper>
       <div className="firstColHeader">
@@ -121,7 +133,7 @@ function Header() {
         </div>
         <div>
           <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-            <ListAltIcon className="logo" />
+            <AccountCircleIcon className="logo" />
           </Button>
           <Menu
             id="simple-menu"
@@ -130,8 +142,8 @@ function Header() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Edit</MenuItem>
-            <MenuItem onClick={handleClose}>Convert to &#8457; or &#8451;</MenuItem>
+            <MenuItem onClick={handleSignIn}>Sign In</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
       </div>

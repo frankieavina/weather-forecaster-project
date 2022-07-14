@@ -10,6 +10,8 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
 import Home from './components/Home/Home';
+import SignIn from './components/SignIn/SignIn';
+import SignUp from './components/SignUp/SignUp';
 import './App.css';
 import WeatherContext from './context/WeatherContext';
 // eslint-disable-next-line import/named
@@ -91,6 +93,8 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="city-weather-details/:id" element={<CityWeatherDetail />} />
+              <Route path="sign-in" element={<SignIn />} />
+              <Route path="sign-up" element={<SignUp />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
