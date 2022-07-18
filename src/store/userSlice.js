@@ -7,14 +7,21 @@ import axios from 'axios';
 export const userLogIn = createAsyncThunk(
   'search/getResults',
   async ({ email, password }) => {
-    const backendRes = await axios
-      .post('http://localhost:8000/api/signin', {
-        email: email,
-        password: password
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    try {
+      console.log('2nd Step:' + email + password);
+      const backendRes = await axios.post(
+        'http://localhost:8000/api/signin',
+        {
+          email: email,
+          password: password
+        }
+      )
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (err) {
+      console.error(`Error!: ${err}`);
+    }
   }
 );
 

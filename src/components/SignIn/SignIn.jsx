@@ -4,20 +4,25 @@ import { useDispatch } from 'react-redux';
 import { userLogIn } from '../../store/userSlice';
 
 function SignIn() {
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
   const dispatch = useDispatch();
 
   const submitForm = (event) => {
     event.preventDefault();
+    console.log('First Step:', email + password);
     dispatch(userLogIn({ email, password }));
   };
 
-  const handleInputChange = (e) => {
-    const { email, password } = e.target;
-    setEmail(email);
-    setPassword(password);
+  const handleEmailChange = (e) => {
+    const emailE = e.target.value;
+    setEmail(emailE);
+  };
+
+  const handlePasswordChange = (e) => {
+    const passwordE = e.target.value;
+    setPassword(passwordE);
   };
 
   return (
@@ -25,21 +30,21 @@ function SignIn() {
       <form onSubmit={submitForm}>
         <label className="label" htmlFor="email">Email</label>
         <input
-          id="email"
-          name="email"
-          onChange={handleInputChange}
+          id="myEmail"
+          name="myEmail"
           className="input"
           value={email}
           type="email"
+          onChange={handleEmailChange}
         />
         <label className="label" htmlFor="password">Password</label>
         <input
-          id="password"
-          name="password"
-          onChange={handleInputChange}
+          id="myPassword"
+          name="myPassword"
           className="input"
           value={password}
           type="password"
+          onChange={handlePasswordChange}
         />
         <button className="btn" type="submit">
           Submit
